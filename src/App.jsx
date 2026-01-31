@@ -38,95 +38,92 @@ function App() {
 
   return (
     // ✅ Wrap everything in AuthProvider
-    <AuthProvider>
-      <BrowserRouter>
+
+    <BrowserRouter>
       <ScrollToTop />
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-black dark:text-white transition-colors duration-300">
-          <Routes>
-            {/* Client Routes */}
-            <Route element={<ClientLayout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/features" element={<Features />} />
-              <Route path="/aboutus" element={<Aboutus />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/resources" element={<Resource />} />
+      <Routes>
+        {/* Client Routes */}
+        <Route element={<ClientLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/aboutus" element={<Aboutus />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/resources" element={<Resource />} />
 
-              {/* Auth Routes (No header/sidebar) */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-            </Route>
+          {/* Auth Routes (No header/sidebar) */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
 
-            {/* Admin Routes (Protected) */}
-            <Route element={<AdminLayout />}>
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/websites"
-                element={
-                  <ProtectedRoute>
-                    <Websites />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/ContinousMonitoring"
-                element={
-                  <ProtectedRoute>
-                    <ContinousMonitoring />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/Alerts"
-                element={
-                  <ProtectedRoute>
-                    <Alerts />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/Vulnerabilities"
-                element={
-                  <ProtectedRoute>
-                    <Vulnerabilities />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/Reports"
-                element={
-                  <ProtectedRoute>
-                    <Reports />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/Settings"
-                element={
-                  <ProtectedRoute>
-                    <Settings />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/HelpSupport"
-                element={
-                  <ProtectedRoute>
-                    <HelpSupport />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
+        {/* Admin Routes (Protected) */}
+        <Route element={<AdminLayout />}>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/websites"
+            element={
+              <ProtectedRoute>
+                <Websites />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ContinousMonitoring"
+            element={
+              <ProtectedRoute>
+                <ContinousMonitoring />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Alerts"
+            element={
+              <ProtectedRoute>
+                <Alerts />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Vulnerabilities"
+            element={
+              <ProtectedRoute>
+                <Vulnerabilities />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Reports"
+            element={
+              <ProtectedRoute>
+                <Reports />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/HelpSupport"
+            element={
+              <ProtectedRoute>
+                <HelpSupport />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
