@@ -9,7 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ClientLayout from "./layouts/ClientLayout";
 import Home from "./pages/landing/Home";
 import Features from "./pages/landing/Features";
-import Aboutus from "./pages/landing/Aboutus";
+import Aboutus from "./pages/landing/AboutUs";
 import Contact from "./pages/landing/Contact";
 import Resource from "./pages/landing/Resource";
 
