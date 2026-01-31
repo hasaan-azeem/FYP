@@ -1,11 +1,11 @@
 import React from "react";
-import FAQ from "../../components/Landing/Common/FAQ";
-import CTA from "../../components/Landing/Common/CTA";
-import AboutHero from "@/components/Landing/About/AboutHero";
-import CompanyFacts from "@/components/Landing/About/CompanyFacts";
-import OurStory from "@/components/Landing/About/OurStory";
-import Values from "@/components/Landing/About/Values";
-import ProductFacts from "@/components/Landing/About/ProductFacts";
+import FAQ from "../../components/landing/Common/FAQ";
+import CTA from "../../components/landing/Common/CTA";
+import AboutHero from "@/components/landing/About/AboutHero";
+import CompanyFacts from "@/components/landing/About/CompanyFacts";
+import OurStory from "@/components/landing/About/OurStory";
+import Values from "@/components/landing/About/Values";
+import ProductFacts from "@/components/landing/About/ProductFacts";
 
 const AboutUs = () => {
   return (
