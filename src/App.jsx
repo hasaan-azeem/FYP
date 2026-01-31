@@ -27,6 +27,7 @@ import ContinousMonitoring from "./pages/admin/ContinousMonitoring";
 // Auth Pages
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const { authLoading } = useContext(AuthContext);
@@ -39,6 +40,7 @@ function App() {
     // ✅ Wrap everything in AuthProvider
     <AuthProvider>
       <BrowserRouter>
+      <ScrollToTop />
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-black dark:text-white transition-colors duration-300">
           <Routes>
             {/* Client Routes */}
