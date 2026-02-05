@@ -14,6 +14,10 @@
   scrollbar-width: none; /* Firefox */
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body.scrollable {
   overflow: auto; /* allow scrolling on body if needed */
 }

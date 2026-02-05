@@ -3,19 +3,19 @@ import React from "react";
 const VALUES = [
   {
     title: "Innovation",
-    desc: "We leverage AI and advanced analytics to stay ahead of emerging threats.",
+    desc: "We stay ahead of the evolving cybersecurity landscape using AI, machine learning, and advanced analytics to detect vulnerabilities and anticipate emerging threats.",
   },
   {
     title: "Integrity",
-    desc: "Transparent assessments and ethical security practices.",
+    desc: "Trust is at our core. We operate transparently with honest assessments, ethical practices, and accurate results that our clients can depend on.",
   },
   {
     title: "Customer Focus",
-    desc: "Solutions tailored to each organization’s real-world needs.",
+    desc: "We deeply understand each organization’s needs and deliver tailored solutions, personalized support, and long term partnerships that ensure success.",
   },
   {
     title: "Reliability",
-    desc: "Consistent protection backed by real-time monitoring.",
+    desc: "Our tools provide consistent, dependable protection with real time monitoring and actionable insights so your digital assets stay secure at all times.",
   },
 ];
 
@@ -35,8 +35,8 @@ const Values = () => {
             Our <span className="text-emerald-500">Values</span>
           </h2>
           <p className="text-gray-300 text-lg leading-relaxed">
-            The principles that guide every decision, every line of code,
-            and every security assessment we deliver.
+            Guiding principles that drive our commitment to excellence,
+            innovation, and client success.
           </p>
         </div>
 

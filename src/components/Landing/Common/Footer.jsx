@@ -1,5 +1,5 @@
-
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   // FOOTER COLUMNS DATA: Organized list of links for different sections
@@ -18,37 +18,40 @@ const Footer = () => {
     {
       title: "CAPABILITIES",
       links: [
-        { name: "Website Scan", url: "/features/scan-engine" },
-        { name: "AI Risk Analysis", url: "/features/ai-risk" },
-        { name: "Predictive Analytics", url: "/features/predictive" },
-        { name: "CWE Integration", url: "/features/cve" },
-        { name: "Alerts & Notifications", url: "/features/alerts" },
+        { name: "Website Scan", url: "/features#website-scan" },
+        { name: "AI Risk Analysis", url: "/features#ai-risk-analysis" },
+        { name: "Predictive Analytics", url: "/features#predictive-analytics" },
+        { name: "CWE Integration", url: "/features#cwe-integration" },
+        {
+          name: "Alerts & Notifications",
+          url: "/features#alerts-notifications",
+        },
       ],
     },
     {
       title: "COMPLIANCE",
       links: [
-        { name: "OWASP TOP 10", url: "/features/scan-engine" },
-        { name: "ISO 27001", url: "/features/ai-risk" },
-        { name: "PCI DSS", url: "/features/predictive" },
-        { name: "HIPAA", url: "/features/cve" },
-        { name: "GDPR", url: "/features/alerts" },
+        { name: "OWASP TOP 10", url: "/features#website-scan" },
+        { name: "ISO 27001", url: "/features#ai-risk-analysis" },
+        { name: "PCI DSS", url: "/features#predictive-analytics" },
+        { name: "HIPAA", url: "/features#cwe-integration" },
+        { name: "GDPR", url: "/features#alerts-notifications" },
       ],
     },
     {
       title: "WEB SECURITY",
       links: [
-        { name: "Cross-site Scripting", url: "/features/scan-engine" },
-        { name: "SQL Injection", url: "/features/ai-risk" },
-        { name: "Reflected XSS", url: "/features/predictive" },
-        { name: "CSRF Attacks", url: "/features/cve" },
-        { name: "Directory Traversal", url: "/features/alerts" },
+        { name: "Cross-site Scripting", url: "/features#website-scan" },
+        { name: "SQL Injection", url: "/features#ai-risk-analysis" },
+        { name: "Reflected XSS", url: "/features#predictive-analytics" },
+        { name: "CSRF Attacks", url: "/features#cwe-integration" },
+        { name: "Directory Traversal", url: "/features#alerts-notifications" },
       ],
     },
     {
       title: "COMPANY/LEGAL",
       links: [
-        { name: "About Us", url: "/about" },
+        { name: "About Us", url: "/aboutus" },
         { name: "Contact Us", url: "/contact" },
         { name: "Privacy Policy", url: "/privacy-policy" },
         { name: "Terms of Service", url: "/support/terms" },
@@ -127,12 +130,12 @@ const Footer = () => {
               {/* Loop through each link in this column */}
               {column.links.map((link, linkIndex) => (
                 <li key={linkIndex}>
-                  <a
-                    href={link.url}
+                  <Link
+                    to={link.url}
                     className="transition-colors duration-300 text-gray-100 hover:text-[#059669]"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

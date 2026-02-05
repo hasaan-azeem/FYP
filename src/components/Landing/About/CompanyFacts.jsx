@@ -2,7 +2,7 @@ import React from "react";
 
 const CompanyFacts = () => {
   return (
-    <section className="relative w-full  py-20 bg-gray-900 text-gray-100">
+    <section className="relative w-full py-20 bg-linear-to-b from-gray-950 to-gray-900 text-gray-100">
       <div className="max-w-7xl mx-auto px-4 md:px-12 flex flex-col lg:flex-row gap-12">
         <div className="lg:w-2/3">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Company Facts</h2>

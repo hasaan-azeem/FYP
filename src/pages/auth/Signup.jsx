@@ -116,7 +116,9 @@ export default function Signup() {
         {password && (
           <div className="text-xs text-gray-400">
             Strength:
-            <span className="ml-2 font-semibold text-white">{strength.label}</span>
+            <span className="ml-2 font-semibold text-white">
+              {strength.label}
+            </span>
             <div className="h-1 w-full bg-gray-700 rounded mt-1">
               <div
                 className={`h-1 rounded ${strength.color}`}
@@ -125,8 +127,8 @@ export default function Signup() {
                     strength.label === "Weak"
                       ? "33%"
                       : strength.label === "Medium"
-                      ? "66%"
-                      : "100%",
+                        ? "66%"
+                        : "100%",
                 }}
               />
             </div>
@@ -155,7 +157,9 @@ export default function Signup() {
               I agree to the{" "}
               <Link className="text-emerald-400 hover:underline">Terms</Link>{" "}
               and{" "}
-              <Link className="text-emerald-400 hover:underline">Privacy Policy</Link>
+              <Link className="text-emerald-400 hover:underline">
+                Privacy Policy
+              </Link>
             </span>
           </label>
           {errors.agree && (

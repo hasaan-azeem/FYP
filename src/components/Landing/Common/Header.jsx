@@ -1,20 +1,15 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
 
-  // Hide auth buttons only on auth pages
-  const hideAuthButtons =
-    location.pathname === "/login" || location.pathname === "/signup";
 
   const menuItems = [
     { name: "Home", link: "/" },
     { name: "Features", link: "/features" },
     { name: "About Us", link: "/aboutus" },
     { name: "Contact", link: "/contact" },
-    { name: "Resources", link: "/resources" },
   ];
 
   return (
@@ -40,7 +35,7 @@ const Header = () => {
         </nav>
 
         {/* Desktop Auth Buttons */}
-        {!hideAuthButtons && (
+        
           <div className="hidden lg:flex items-center space-x-4">
             <Link
               to="/login"
@@ -67,7 +62,7 @@ const Header = () => {
               Get Started
             </Link>
           </div>
-        )}
+        
 
         {/* Mobile Hamburger */}
         <div className="lg:hidden">
@@ -108,7 +103,7 @@ const Header = () => {
       </div>
 
       {/* Mobile Menu */}
-      {!hideAuthButtons && isOpen && (
+     
         <div className="lg:hidden bg-gray-900/95 backdrop-blur-sm">
           <ul className="flex flex-col px-6 py-4 space-y-4">
             {menuItems.map((item) => (
@@ -144,7 +139,7 @@ const Header = () => {
             </li>
           </ul>
         </div>
-      )}
+      
     </header>
   );
 };
