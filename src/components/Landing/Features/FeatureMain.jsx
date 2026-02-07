@@ -24,7 +24,7 @@ const FeatureMain = () => {
       subtitle: "AI-Driven Web Security Platform",
       description:
         "WebXGuard is a modern, AI-powered web application security platform designed to protect organizations from evolving cyber threats. It combines automated vulnerability scanning, continuous monitoring, intelligent risk analysis, and compliance validation into a single unified system. By continuously analyzing web applications, WebXGuard helps organizations identify security weaknesses early, reduce attack surfaces, and maintain a strong security posture throughout the application lifecycle.",
-      image: "/images/overview.png",
+      image: "/images/overview.webp",
     },
     {
       id: "website-scan",

@@ -3,6 +3,10 @@ import { NavLink } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+
 import logo from "../../assets/logo.png";
 import { NAV_ITEMS } from "../admin/constants/navigation";
 
@@ -12,12 +16,20 @@ const SideBar = () => {
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
 
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
   return (
     <>
       {/* Mobile Bars Button */}
       <button
         onClick={toggleSidebar}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 text-black rounded bg-white"
+        className="lg:hidden fixed top-3.5 left-4 z-50 p-2 text-white "
       >
         <FaBars size={22} />
       </button>
@@ -69,7 +81,10 @@ const SideBar = () => {
             );
           })}
 
-          <button className="flex items-center gap-2 p-2 mt-10 rounded bg-gray-500 w-full md:hidden">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 p-2 mt-60 rounded bg-gray-500 w-full md:hidden"
+          >
             <LogOut size={20} /> Logout
           </button>
         </ul>

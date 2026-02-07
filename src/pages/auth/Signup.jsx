@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthLayout from "../../components/auth/AuthLayout";
 import AuthInput from "../../components/auth/AuthInput";
@@ -24,8 +24,15 @@ export default function Signup() {
 
   const { login } = useContext(AuthContext); // to save JWT
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const strength = getPasswordStrength(password);
+
+  useEffect(() => {
+    if (user?.token) {
+      navigate("/dashboard"); // already logged in → dashboard
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,21 +57,21 @@ export default function Signup() {
 
     try {
       // Call backend signup
-      const res = await API.post("/auth/signup", {
+      const res = await API.post("/auth/dashboard/signup", {
         username: name,
         email,
         password,
       });
 
       // Optional: auto-login after signup
-      login(res.data.access_token);
+      await login(res.data.access_token);
 
       setLoading(false);
-      navigate("/login"); // redirect to dashboard
+      navigate("/dashboard"); // redirect to dashboard
     } catch (err) {
       setLoading(false);
       setErrors({
-        backend: err.response?.data?.msg || "Signup failed. Try again.",
+        backend: err.response?.data?.message || "Signup failed. Try again.",
       });
     }
   };
@@ -76,7 +83,10 @@ export default function Signup() {
       footer={
         <>
           Already have an account?{" "}
-          <Link to="/login" className="text-emerald-400 hover:underline">
+          <Link
+            to="/auth/dashboard/login"
+            className="text-emerald-400 hover:underline"
+          >
             Sign in
           </Link>
         </>

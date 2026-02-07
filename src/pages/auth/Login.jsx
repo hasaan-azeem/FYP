@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../../components/auth/AuthLayout";
 import AuthInput from "../../components/auth/AuthInput";
@@ -12,9 +12,16 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const { user } = useContext(AuthContext);
   const { login } = useContext(AuthContext); // store JWT
   const navigate = useNavigate();
+
+  // ✅ Auto redirect if already logged in
+  useEffect(() => {
+    if (user?.token) {
+      navigate("/dashboard"); // agar logged in hai, dashboard pe bhej do
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,10 +43,10 @@ export default function Login() {
 
     try {
       // Call backend login route
-      const res = await API.post("/auth/login", { email, password });
+      const res = await API.post("/auth/dashboard/login", { email, password });
 
       // Save JWT in AuthContext
-      login(res.data.access_token);
+      await login(res.data.access_token);
 
       setLoading(false);
 
@@ -61,7 +68,10 @@ export default function Login() {
       footer={
         <>
           Don’t have an account?{" "}
-          <Link to="/signup" className="text-emerald-400 hover:underline">
+          <Link
+            to="/auth/dashboard/signup"
+            className="text-emerald-400 hover:underline"
+          >
             Create one
           </Link>
         </>

@@ -1,5 +1,3 @@
-import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 import LineChart from "../../components/admin/charts/LineChart";
@@ -28,16 +26,6 @@ const statusColor = (status) => {
 };
 
 const Dashboard = () => {
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!user?.token) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
-
   return (
     <div className="w-full text-black dark:text-white">
       {/* Stat boxes */}
@@ -76,7 +64,7 @@ const Dashboard = () => {
                   >
                     <td
                       className={`px-4 py-2 font-medium rounded ${statusColor(
-                        scan.status
+                        scan.status,
                       )}`}
                     >
                       {scan.status}

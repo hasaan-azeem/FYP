@@ -4,14 +4,26 @@ import { useLocation } from "react-router-dom";
 import { NAV_ITEMS } from "../admin/constants/navigation";
 import { DarkMode } from "./common/DarkMode";
 
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+
 const TopBar = () => {
   const location = useLocation();
 
   const activeItem = NAV_ITEMS.find(
     (item) =>
       item.path === location.pathname ||
-      location.pathname.startsWith(item.path + "/")
+      location.pathname.startsWith(item.path + "/"),
   );
+
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/auth/dashboard/login");
+  };
 
   return (
     <div className="w-full h-16 bg-white dark:bg-gray-800 dark:text-white flex items-center justify-between px-4 md:px-6 shadow sticky top-0 z-30">
@@ -28,7 +40,7 @@ const TopBar = () => {
           alt="profile"
           className="w-10 h-10 rounded-full object-cover"
         />
-        <button className="hidden md:block cursor-pointer">
+        <button onClick={handleLogout} className="items-center hidden md:block">
           <LogOut size={22} className="text-[#1EC8A0] hover:text-black" />
         </button>
       </div>

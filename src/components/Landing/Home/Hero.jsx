@@ -10,6 +10,10 @@ const Hero = () => {
         muted
         loop
         playsInline
+        controls={false} // hides default controls
+        controlsList="nodownload" // disables browser download button
+        disablePictureInPicture // disables PiP
+        onContextMenu={(e) => e.preventDefault()} // disables right-click
         className="absolute top-0 left-0 w-full h-full object-cover"
       >
         <source src={heroVideo} type="video/mp4" />

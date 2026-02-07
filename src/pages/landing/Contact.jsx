@@ -67,7 +67,7 @@ const Contact = () => {
   }
 
   return (
-   <>
+    <>
       {/* Show toast message if there is one */}
       {toast && (
         <Toast
@@ -80,7 +80,7 @@ const Contact = () => {
       {/* ========================================
           SECTION 1: HERO SECTION
       ======================================== */}
-      <section className="relative w-full h-screen overflow-hidden bg-linear-to-b from-gray-950 to-gray-900 py-32">
+      <section className="relative w-full h-screen overflow-hidden bg-linear-to-b from-gray-950 to-gray-900 -mb-5 py-32">
         <div className="max-w-7xl mx-auto px-4 md:px-12 flex justify-center flex-col md:flex-row items-center gap-10">
           {/* Text Content */}
           <div className="md:w-3/4 flex flex-col justify-center py-15">
@@ -107,13 +107,12 @@ const Contact = () => {
               {/* Decorative glow */}
               <div className="absolute w-72 h-72 bg-[#059669] opacity-20 blur-3xl rounded-full"></div>
               <img
-                src="/contact-chatting-communication-svgrepo-com.svg"
+                src="/images/contact.webp"
                 alt="Contact Illustration"
                 className="relative w-full max-w-md object-contain"
               />
             </div>
           </div>
-          
         </div>
         <div className="items-center justify-center hidden md:block">
           <img
@@ -131,8 +130,7 @@ const Contact = () => {
         id="get-started"
         className="w-full bg-linear-to-b from-gray-900 to-gray-950"
       >
-        
-        <div className="max-w-7xl mx-auto py-28 px-4 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="max-w-7xl mx-auto py-24 px-4 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* LEFT SIDE: Contact Information */}
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-100">
