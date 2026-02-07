@@ -35,14 +35,14 @@ const Hero = () => {
           </p>
 
           {/* URL Scanner Input */}
-          <div className="mt-8 flex flex-col sm:flex-row items-stretch w-full max-w-3xl mx-auto rounded-lg overflow-hidden">
+          <div className="mt-8 flex flex-col sm:flex-row gap-2 items-stretch w-full max-w-3xl mx-auto">
             {/* Protocol Dropdown */}
             <div className="relative shrink-0">
-              <select className="appearance-none bg-gray-800 text-white px-3 sm:px-7  py-3 border border-gray-700 focus:outline-none rounded-t-lg sm:rounded-l-lg sm:rounded-t-none">
+              <select className="appearance-none bg-gray-800 text-white px-4 py-3 text-center border border-gray-700 focus:outline-none rounded-lg sm:rounded-l-lg sm:rounded-r-none w-full sm:w-auto">
                 <option value="http">http://</option>
                 <option value="https">https://</option>
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <div className="pointer-events-none absolute inset-y-0  -right-1 flex items-center pr-2 ">
                 <svg
                   className="h-4 w-4 text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,13 +64,13 @@ const Hero = () => {
             <input
               type="text"
               placeholder="Enter website URL"
-              className="flex-1 min-w-0 px-3 sm:px-4 py-3 bg-gray-900 text-white border-t border-b border-gray-700 focus:outline-none"
+              className="flex-1 px-4 py-3 bg-gray-900 text-white border border-gray-700 focus:outline-none rounded-lg sm:rounded-none w-full"
             />
 
             {/* Start Scan Button */}
             <a
               href="/signup"
-              className="shrink-0 bg-[#059669] hover:bg-[#047857] transition text-white px-4 sm:px-6 py-3 rounded-b-lg sm:rounded-r-lg sm:rounded-b-none font-semibold text-center"
+              className="bg-[#059669] hover:bg-[#047857] transition text-white px-6 py-3 rounded-lg sm:rounded-r-lg sm:rounded-l-none font-semibold text-center w-full sm:w-auto"
             >
               Start Scan
             </a>
