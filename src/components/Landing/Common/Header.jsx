@@ -37,7 +37,7 @@ const Header = () => {
 
         <div className="hidden lg:flex items-center space-x-4">
           <Link
-            to="/login"
+            to="/auth/dashboard/login"
             className="group relative flex items-center space-x-2 px-3 py-2"
           >
             <svg
@@ -55,7 +55,7 @@ const Header = () => {
           </Link>
 
           <Link
-            to="/signup"
+            to="/auth/dashboard/signup"
             className="bg-[#101828] border-2 border-[#059669] hover:bg-[#059669] transition-all duration-300 text-gray-100 px-6 py-2 rounded-lg font-semibold"
           >
             Get Started
