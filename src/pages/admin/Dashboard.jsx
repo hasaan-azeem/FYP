@@ -27,7 +27,7 @@ const statusColor = (status) => {
 
 const Dashboard = () => {
   return (
-    <div className="w-full text-black dark:text-white">
+    <div className="w-fulltext-black dark:text-white">
       {/* Stat boxes */}
       <StatsGrid />
 

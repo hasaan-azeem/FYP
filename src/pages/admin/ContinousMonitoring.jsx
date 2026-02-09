@@ -14,10 +14,10 @@ const ContinousMonitoring = () => {
   ];
 
   return (
-    <div className="mb-6">
-      <div className="w-full bg-white p-6 rounded-xl shadow">
+    <div className="mb-6 p-2">
+      <div className="w-full bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
         <div className="flex justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Monitored Website
           </h2>
           <button
@@ -25,7 +25,7 @@ const ContinousMonitoring = () => {
             className="flex items-center gap-2 px-4 py-2 bg-[#1ABC9C] text-white rounded-lg hover:bg-[#1EC8A0] focus:outline-none focus:ring-2 focus:ring-[#1EC8A0] transition"
           >
             <CirclePlus className="w-5 h-5" />
-            <span>Add Website</span>
+            <span className="">Add Website</span>
           </button>
         </div>
         <div className="mt-6 space-y-3">

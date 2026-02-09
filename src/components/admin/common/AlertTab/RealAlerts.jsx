@@ -20,9 +20,9 @@ const RealAlerts = () => {
   };
 
   return (
-    <div className="w-full bg-white p-6 rounded-xl shadow mt-10">
+    <div className="w-full bg-white dark:bg-gray-800 p-6 rounded-xl shadow mt-10">
       <div className="mb-4">
-        <h2 className="text-xl font-medium text-gray-900">Real-time Alerts</h2>
+        <h2 className="text-xl font-medium text-gray-900 dark:text-white">Real-time Alerts</h2>
       </div>
 
       <div className="flex flex-col gap-3">

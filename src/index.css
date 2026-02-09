@@ -14,8 +14,8 @@ html {
   scroll-behavior: smooth;
 }
 
-body.scrollable {
-  overflow: auto; /* allow scrolling on body if needed */
+body {
+  overflow: auto;
 }
 
 /* Gradient shapes */

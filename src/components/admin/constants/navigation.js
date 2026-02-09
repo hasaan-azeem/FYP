@@ -17,37 +17,37 @@ export const NAV_ITEMS = [
   },
   {
     name: "Websites",
-    path: "/websites",
+    path: "/dashboard/websites",
     icon: Shield,
   },
   {
     name: "Continuous Monitoring",
-    path: "/continousmonitoring",
+    path: "/dashboard/continuousmonitoring",
     icon: Activity,
   },
   {
     name: "Alerts",
-    path: "/alerts",
+    path: "/dashboard/alerts",
     icon: TriangleAlert,
   },
   {
     name: "Vulnerabilities",
-    path: "/vulnerabilities",
+    path: "/dashboard/vulnerabilities",
     icon: AlertCircle,
   },
   {
     name: "Reports",
-    path: "/reports",
+    path: "/dashboard/reports",
     icon: FileText,
   },
   {
     name: "Settings",
-    path: "/settings",
+    path: "/dashboard/settings",
     icon: Settings,
   },
   {
     name: "Help & Support",
-    path: "/HelpSupport",
+    path: "/dashboard/HelpSupport",
     icon: HelpCircle,
   },
 ];

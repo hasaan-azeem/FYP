@@ -5,12 +5,12 @@ const SearchBar = () => {
   return (
     <>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">New Website Scan</h1>
-        <p className="text-gray-600 ">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">New Website Scan</h1>
+        <p className="text-gray-600 dark:text-gray-400">
           Enter a URL to perform a comprehensive, non-destructive security scan.
         </p>
       </div>
-      <div className="w-full bg-white p-6 rounded-xl shadow">
+      <div className="w-full bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
         <div className="flex flex-col md:flex-row items-center gap-4">
           {/* Input box */}
           <div className="flex items-center w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3">

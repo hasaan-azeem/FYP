@@ -39,13 +39,20 @@ const StatsGrid = () => {
   return (
     <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {stats.map((item, index) => (
-        <div key={index} className="bg-white  rounded-xl shadow-md p-6">
+        <div
+          key={index}
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6"
+        >
           <div className="flex items-center">
             <div className={`p-3 rounded-lg ${item.iconBg}`}>{item.icon}</div>
 
             <div className="ml-4">
-              <p className="text-sm text-gray-500 ">{item.title}</p>
-              <p className="text-2xl font-bold text-gray-900 ">{item.value}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {item.title}
+              </p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                {item.value}
+              </p>
             </div>
           </div>
 

@@ -4,7 +4,7 @@ import ScanTabs from "../../components/admin/common/ScansTab/ScansTab";
 
 const Websites = () => {
   return (
-    <div className="w-full">
+    <div className="w-full p-2">
       <ScanTabs />
     </div>
   );

@@ -24,20 +24,20 @@ const ScanHistory = () => {
     return "text-red-600";
   };
   return (
-    <div className="w-full bg-white p-6 rounded-xl shadow">
+    <div className="w-full bg-white dark:bg-gray-800 p-2 rounded-xl shadow">
       <div className="mb-6">
         <div className="flex items-center gap-2">
           <Clock className="text-[#1ABC9C]" />
-          <h1 className="text-2xl font-bold text-gray-900">Scan History</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Scan History</h1>
         </div>
-        <p className="text-gray-600 ">
+        <p className="text-gray-600 dark:text-gray-400">
           Review results from previous security scans.
         </p>
       </div>
       <div>
         <table className="w-full border-collapse">
           <thead>
-            <tr className="text-left border-b border-gray-300">
+            <tr className="text-left border-b border-gray-300 dark:text-gray-200">
               <th className="py-3 px-2 font-semibold">URL</th>
               <th className="py-3 px-2 font-semibold">Date</th>
               <th className="py-3 px-2 font-semibold">Grade</th>
@@ -45,7 +45,7 @@ const ScanHistory = () => {
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className="dark:text-gray-300">
             {data.map((item, index) => (
               <tr key={index} className="border-b border-gray-200">
                 <td className="py-3 px-2">{item.url}</td>

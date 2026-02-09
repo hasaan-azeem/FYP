@@ -16,7 +16,7 @@ const AlertTab = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`pb-2 font-medium text-gray-800  ${
+            className={`pb-2 font-medium text-gray-800 dark:text-gray-200 ${
               activeTab === tab
                 ? "border-b-2 border-[#1ABC9C] text-[#1EC8A0]"
                 : "hover:text-[#1ABC9C] transition-colors"

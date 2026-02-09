@@ -12,7 +12,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-sm shadow-md h-20">
+    <header className="fixed top-0 left-0 w-full z-50 bg-gray-900 shadow-md h-20">
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-full">
         {/* Logo */}
         <Link to="/" className="text-2xl sm:text-3xl font-bold text-[#059669]">
