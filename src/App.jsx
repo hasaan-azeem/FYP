@@ -174,7 +174,7 @@ import ContinousMonitoring from "./pages/admin/ContinousMonitoring";
 // Auth Pages
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
-import ForgotPassword from "./pages/auth/ForgotPassword";
+import ForgotPassword from "./pages/auth/Forgotpassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import OAuthCallback from "./pages/auth/OAuthCallback";
 import ScrollToTop from "./components/ScrollToTop";
