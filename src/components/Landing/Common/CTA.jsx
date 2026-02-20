@@ -31,7 +31,7 @@ const CTA = () => {
             <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
               {/* Primary button - Get Started */}
               <Link
-                to="/signup"
+                to="/auth/dashboard/signup"
                 className="px-8 py-4 bg-[#059669]/80 text-gray-100 font-semibold rounded-lg shadow-lg hover:bg-[#059669] transition"
               >
                 Get Started
