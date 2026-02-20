@@ -1,387 +1,4 @@
-// import { useEffect, useState, useContext } from "react";
-// import { useNavigate, Link } from "react-router-dom";
-// import AuthLayout from "../../components/auth/AuthLayout";
-// import AuthInput from "../../components/auth/AuthInput";
-// import AuthButton from "../../components/auth/AuthButton";
-// import {
-//   validateEmail,
-//   validatePassword,
-//   validateConfirmPassword,
-// } from "../../utils/validators";
-// import { getPasswordStrength } from "../../utils/passwordStrength";
-// import API from "../../api/backend_api"; // Axios instance
-// import { AuthContext } from "../../context/AuthContext";
-
-// export default function Signup() {
-//   const [name, setName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [confirmPassword, setConfirmPassword] = useState("");
-//   const [agree, setAgree] = useState(false);
-
-//   const [errors, setErrors] = useState({});
-//   const [loading, setLoading] = useState(false);
-
-//   const { login } = useContext(AuthContext); // to save JWT
-//   const navigate = useNavigate();
-//   const { user } = useContext(AuthContext);
-
-//   const strength = getPasswordStrength(password);
-
-//   useEffect(() => {
-//     if (user?.token) {
-//       navigate("/dashboard"); // already logged in → dashboard
-//     }
-//   }, [user, navigate]);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     // Frontend validation
-//     const emailError = validateEmail(email);
-//     const passwordError = validatePassword(password);
-//     const confirmError = validateConfirmPassword(password, confirmPassword);
-
-//     if (emailError || passwordError || confirmError || !agree) {
-//       setErrors({
-//         email: emailError,
-//         password: passwordError,
-//         confirmPassword: confirmError,
-//         agree: !agree ? "You must accept the terms" : "",
-//       });
-//       return;
-//     }
-
-//     setErrors({});
-//     setLoading(true);
-
-//     try {
-//       // Call backend signup
-//       const res = await API.post("/auth/dashboard/signup", {
-//         username: name,
-//         email,
-//         password,
-//       });
-
-//       // Optional: auto-login after signup
-//       await login(res.data.access_token);
-
-//       setLoading(false);
-//       navigate("/dashboard"); // redirect to dashboard
-//     } catch (err) {
-//       setLoading(false);
-//       setErrors({
-//         backend: err.response?.data?.message || "Signup failed. Try again.",
-//       });
-//     }
-//   };
-
-//   return (
-//     <AuthLayout
-//       title="Create Your Account"
-//       subtitle="Secure your applications with WebXGuard"
-//       footer={
-//         <>
-//           Already have an account?{" "}
-//           <Link
-//             to="/auth/dashboard/login"
-//             className="text-emerald-400 hover:underline"
-//           >
-//             Sign in
-//           </Link>
-//         </>
-//       }
-//     >
-//       <form onSubmit={handleSubmit} className="space-y-5">
-//         {errors.backend && (
-//           <p className="text-xs text-red-400">{errors.backend}</p>
-//         )}
-
-//         <AuthInput
-//           label="Full name"
-//           placeholder="John Doe"
-//           value={name}
-//           onChange={(e) => setName(e.target.value)}
-//         />
-
-//         <AuthInput
-//           label="Email address"
-//           type="email"
-//           placeholder="you@company.com"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           error={errors.email}
-//         />
-
-//         <AuthInput
-//           label="Password"
-//           type="password"
-//           placeholder="Minimum 8 characters"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           error={errors.password}
-//         />
-
-//         {/* Password strength */}
-//         {password && (
-//           <div className="text-xs text-gray-400">
-//             Strength:
-//             <span className="ml-2 font-semibold text-white">
-//               {strength.label}
-//             </span>
-//             <div className="h-1 w-full bg-gray-700 rounded mt-1">
-//               <div
-//                 className={`h-1 rounded ${strength.color}`}
-//                 style={{
-//                   width:
-//                     strength.label === "Weak"
-//                       ? "33%"
-//                       : strength.label === "Medium"
-//                         ? "66%"
-//                         : "100%",
-//                 }}
-//               />
-//             </div>
-//           </div>
-//         )}
-
-//         <AuthInput
-//           label="Confirm password"
-//           type="password"
-//           placeholder="ReEnter password"
-//           value={confirmPassword}
-//           onChange={(e) => setConfirmPassword(e.target.value)}
-//           error={errors.confirmPassword}
-//         />
-
-//         {/* Terms */}
-//         <div className="text-sm text-gray-400">
-//           <label className="flex items-start gap-2">
-//             <input
-//               type="checkbox"
-//               checked={agree}
-//               onChange={(e) => setAgree(e.target.checked)}
-//               className="accent-emerald-500 mt-1"
-//             />
-//             <span>
-//               I agree to the{" "}
-//               <Link className="text-emerald-400 hover:underline">Terms</Link>{" "}
-//               and{" "}
-//               <Link className="text-emerald-400 hover:underline">
-//                 Privacy Policy
-//               </Link>
-//             </span>
-//           </label>
-//           {errors.agree && (
-//             <p className="text-xs text-red-400 mt-1">{errors.agree}</p>
-//           )}
-//         </div>
-
-//         <AuthButton
-//           text="Create Account"
-//           loading={loading}
-//           disabled={!name || !email || !password || !confirmPassword || !agree}
-//         />
-//       </form>
-//     </AuthLayout>
-//   );
-// }
-
-// import { useEffect, useState, useContext } from "react";
-// import { useNavigate, Link } from "react-router-dom";
-// import AuthLayout from "../../components/auth/AuthLayout";
-// import AuthInput from "../../components/auth/AuthInput";
-// import AuthButton from "../../components/auth/AuthButton";
-// import {
-//   validateEmail,
-//   validatePassword,
-//   validateConfirmPassword,
-// } from "../../utils/validators";
-// import { getPasswordStrength } from "../../utils/passwordStrength";
-// import API from "../../api/backend_api";
-// import { AuthContext } from "../../context/AuthContext";
-
-// export default function Signup() {
-//   const [name, setName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [confirmPassword, setConfirmPassword] = useState("");
-//   const [agree, setAgree] = useState(false);
-
-//   const [errors, setErrors] = useState({});
-//   const [loading, setLoading] = useState(false);
-
-//   const { user, login } = useContext(AuthContext);
-//   const navigate = useNavigate();
-
-//   const strength = getPasswordStrength(password);
-
-//   useEffect(() => {
-//     if (user?.token) {
-//       navigate("/dashboard");
-//     }
-//   }, [user, navigate]);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     // Frontend validation
-//     const emailError = validateEmail(email);
-//     const passwordError = validatePassword(password);
-//     const confirmError = validateConfirmPassword(password, confirmPassword);
-
-//     if (emailError || passwordError || confirmError || !agree) {
-//       setErrors({
-//         email: emailError,
-//         password: passwordError,
-//         confirmPassword: confirmError,
-//         agree: !agree ? "You must accept the terms" : "",
-//       });
-//       return;
-//     }
-
-//     setErrors({});
-//     setLoading(true);
-
-//     try {
-//       // Call backend signup
-//       const res = await API.post("/auth/dashboard/signup", {
-//         username: name,
-//         email,
-//         password,
-//       });
-
-//       // Auto-login after signup
-//       await login(res.data.access_token);
-
-//       // Redirect to dashboard
-//       navigate("/dashboard");
-//     } catch (err) {
-//       setErrors({
-//         backend: err.response?.data?.message || "Signup failed. Try again.",
-//       });
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <AuthLayout
-//       title="Create Your Account"
-//       subtitle="Secure your applications with WebXGuard"
-//       footer={
-//         <>
-//           Already have an account?{" "}
-//           <Link
-//             to="/auth/dashboard/login"
-//             className="text-emerald-400 hover:underline"
-//           >
-//             Sign in
-//           </Link>
-//         </>
-//       }
-//     >
-//       <form onSubmit={handleSubmit} className="space-y-5">
-//         {errors.backend && (
-//           <p className="text-xs text-red-400">{errors.backend}</p>
-//         )}
-
-//         <AuthInput
-//           label="Full name"
-//           placeholder="John Doe"
-//           value={name}
-//           onChange={(e) => setName(e.target.value)}
-//         />
-
-//         <AuthInput
-//           label="Email address"
-//           type="email"
-//           placeholder="you@company.com"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           error={errors.email}
-//         />
-
-//         <AuthInput
-//           label="Password"
-//           type="password"
-//           placeholder="Minimum 8 characters"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           error={errors.password}
-//         />
-
-//         {/* Password strength */}
-//         {password && (
-//           <div className="text-xs text-gray-400">
-//             Strength:
-//             <span className="ml-2 font-semibold text-white">
-//               {strength.label}
-//             </span>
-//             <div className="h-1 w-full bg-gray-700 rounded mt-1">
-//               <div
-//                 className={`h-1 rounded ${strength.color}`}
-//                 style={{
-//                   width:
-//                     strength.label === "Weak"
-//                       ? "33%"
-//                       : strength.label === "Medium"
-//                         ? "66%"
-//                         : "100%",
-//                 }}
-//               />
-//             </div>
-//           </div>
-//         )}
-
-//         <AuthInput
-//           label="Confirm password"
-//           type="password"
-//           placeholder="ReEnter password"
-//           value={confirmPassword}
-//           onChange={(e) => setConfirmPassword(e.target.value)}
-//           error={errors.confirmPassword}
-//         />
-
-//         {/* Terms */}
-//         <div className="text-sm text-gray-400">
-//           <label className="flex items-start gap-2">
-//             <input
-//               type="checkbox"
-//               checked={agree}
-//               onChange={(e) => setAgree(e.target.checked)}
-//               className="accent-emerald-500 mt-1"
-//             />
-//             <span>
-//               I agree to the{" "}
-//               <Link className="text-emerald-400 hover:underline">Terms</Link>{" "}
-//               and{" "}
-//               <Link className="text-emerald-400 hover:underline">
-//                 Privacy Policy
-//               </Link>
-//             </span>
-//           </label>
-//           {errors.agree && (
-//             <p className="text-xs text-red-400 mt-1">{errors.agree}</p>
-//           )}
-//         </div>
-
-//         <AuthButton
-//           text="Create Account"
-//           loading={loading}
-//           disabled={
-//             !name ||
-//             !email ||
-//             !password ||
-//             !confirmPassword ||
-//             !agree ||
-//             loading
-//           }
-//         />
-//       </form>
-//     </AuthLayout>
-//   );
-// }
+/* eslint-disable no-unused-vars */
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthLayout from "../../components/auth/AuthLayout";
@@ -395,6 +12,7 @@ import {
 import { getPasswordStrength } from "../../utils/passwordStrength";
 import API from "../../api/backend_api";
 import { AuthContext } from "../../context/AuthContext";
+import AuthLoader from "../../components/AuthLoader";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -406,6 +24,7 @@ export default function Signup() {
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState(null); // "google" | "github" | null
 
   const { user, login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -413,15 +32,12 @@ export default function Signup() {
   const strength = getPasswordStrength(password);
 
   useEffect(() => {
-    if (user) {
-      navigate("/dashboard");
-    }
+    if (user?.is_verified) navigate("/dashboard");
   }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Frontend validation
     const emailError = validateEmail(email);
     const passwordError = validatePassword(password);
     const confirmError = validateConfirmPassword(password, confirmPassword);
@@ -440,19 +56,15 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      // Call backend signup
       const res = await API.post("/api/auth/register", {
-        username: username,
+        username,
         email,
         password,
         full_name: name,
       });
 
-      // Login with token and user data from response
       await login(res.data.access_token, res.data.user);
-
-      // Navigate to dashboard
-      navigate("/dashboard");
+      navigate("/auth/dashboard/verify-email-notice", { replace: true });
     } catch (err) {
       setErrors({
         backend:
@@ -464,21 +76,30 @@ export default function Signup() {
   };
 
   const handleOAuthLogin = async (provider) => {
+    setOauthLoading(provider);
+    setErrors({});
     try {
       const response = await API.get(`/api/auth/oauth/${provider}`);
       if (response.data.auth_url) {
-        // Save state for verification
         localStorage.setItem("oauth_state", response.data.state);
-        // Redirect to OAuth provider
         window.location.href = response.data.auth_url;
+        return;
       }
-      // eslint-disable-next-line no-unused-vars
     } catch (err) {
-      setErrors({
-        backend: `${provider} signup failed. Please try again.`,
-      });
+      setErrors({ backend: `${provider} signup failed. Please try again.` });
+      setOauthLoading(null);
     }
   };
+
+  if (loading) return <AuthLoader message="Creating your account..." />;
+  if (oauthLoading)
+    return (
+      <AuthLoader
+        message={`Connecting with ${
+          oauthLoading.charAt(0).toUpperCase() + oauthLoading.slice(1)
+        }...`}
+      />
+    );
 
   return (
     <AuthLayout
@@ -513,7 +134,6 @@ export default function Signup() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-
         <AuthInput
           label="Email address"
           type="email"
@@ -522,7 +142,6 @@ export default function Signup() {
           onChange={(e) => setEmail(e.target.value)}
           error={errors.email}
         />
-
         <AuthInput
           label="Password"
           type="password"
@@ -532,7 +151,6 @@ export default function Signup() {
           error={errors.password}
         />
 
-        {/* Password strength */}
         {password && (
           <div className="text-xs text-gray-400">
             Strength:
@@ -541,15 +159,8 @@ export default function Signup() {
             </span>
             <div className="h-1 w-full bg-gray-700 rounded mt-1">
               <div
-                className={`h-1 rounded ${strength.color}`}
-                style={{
-                  width:
-                    strength.label === "Weak"
-                      ? "33%"
-                      : strength.label === "Medium"
-                        ? "66%"
-                        : "100%",
-                }}
+                className={`h-1 rounded transition-all ${strength.color}`}
+                style={{ width: `${strength.percent}%` }}
               />
             </div>
           </div>
@@ -558,15 +169,14 @@ export default function Signup() {
         <AuthInput
           label="Confirm password"
           type="password"
-          placeholder="ReEnter password"
+          placeholder="Re-enter password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           error={errors.confirmPassword}
         />
 
-        {/* Terms */}
         <div className="text-sm text-gray-400">
-          <label className="flex items-start gap-2">
+          <label className="flex items-start gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={agree}
@@ -601,11 +211,11 @@ export default function Signup() {
         />
       </form>
 
-      {/* OAuth Options */}
+      {/* OAuth */}
       <div className="mt-6">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-700"></div>
+            <div className="w-full border-t border-gray-700" />
           </div>
           <div className="relative flex justify-center text-sm">
             <span className="px-2 bg-gray-900 text-gray-400">
@@ -618,7 +228,8 @@ export default function Signup() {
           <button
             type="button"
             onClick={() => handleOAuthLogin("google")}
-            className="flex items-center justify-center px-4 py-3 border border-gray-700 rounded-lg hover:bg-gray-800 transition"
+            disabled={!!oauthLoading}
+            className="flex items-center justify-center px-4 py-3 border border-gray-700 rounded-lg hover:bg-gray-800 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -646,7 +257,8 @@ export default function Signup() {
           <button
             type="button"
             onClick={() => handleOAuthLogin("github")}
-            className="flex items-center justify-center px-4 py-3 border border-gray-700 rounded-lg hover:bg-gray-800 transition"
+            disabled={!!oauthLoading}
+            className="flex items-center justify-center px-4 py-3 border border-gray-700 rounded-lg hover:bg-gray-800 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg
               className="w-5 h-5 text-gray-300"

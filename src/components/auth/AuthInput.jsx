@@ -6,16 +6,14 @@ export default function AuthInput({
   placeholder,
   value,
   onChange,
-  error
+  error,
 }) {
   const [show, setShow] = useState(false);
   const isPassword = type === "password";
 
   return (
     <div>
-      <label className="block text-sm text-gray-300 mb-1">
-        {label}
-      </label>
+      <label className="block text-sm text-gray-300 mb-1">{label}</label>
 
       <div className="relative">
         <input
@@ -25,7 +23,7 @@ export default function AuthInput({
           placeholder={placeholder}
           className={`w-full px-4 py-2.5 pr-12 rounded-lg bg-black/40 border 
           ${error ? "border-red-500" : "border-white/10"}
-          text-white placeholder-gray-500 focus:outline-none focus:ring-2 
+          text-white placeholder-gray-500 focus:outline-none focus:ring-1 
           ${error ? "focus:ring-red-500" : "focus:ring-emerald-500"}`}
         />
 
@@ -40,11 +38,7 @@ export default function AuthInput({
         )}
       </div>
 
-      {error && (
-        <p className="text-xs text-red-400 mt-1">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
     </div>
   );
 }

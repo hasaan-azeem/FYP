@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useLocation, useNavigate, Outlet } from "react-router-dom";
 import {
   ChartNoAxesColumn,
@@ -35,13 +35,32 @@ const SidebarItem = ({ icon, label, to, active, onClick }) => (
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
+  const profileRef = useRef(null);
 
   const { logout, user, loading } = useContext(AuthContext);
 
   const closeSidebar = () => setSidebarOpen(false);
+
+  // Close sidebar on route change (covers tablet too)
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    closeSidebar();
+  }, [location.pathname]);
+
+  // Close profile dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // dark mode
   useEffect(() => {
@@ -50,6 +69,7 @@ const AdminLayout = () => {
   }, [darkMode]);
 
   const handleLogout = async () => {
+    setProfileOpen(false);
     await logout();
     navigate("/auth/dashboard/login");
   };
@@ -87,7 +107,6 @@ const AdminLayout = () => {
     },
   ];
 
-  // Get display name (username, email, or full_name)
   const displayName =
     user?.username || user?.full_name || user?.email || "User";
 
@@ -95,14 +114,14 @@ const AdminLayout = () => {
     <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       {/* ================= Sidebar ================= */}
       <aside
-        className={`fixed md:static z-40 w-64 h-full bg-white dark:bg-slate-900
+        className={`fixed z-40 w-64 h-full bg-white dark:bg-black
         border-r border-gray-200 dark:border-slate-800 flex flex-col
         transform transition-transform duration-300
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="p-6 flex justify-between items-center shrink-0">
           <h2 className="text-xl font-bold">Admin Panel</h2>
-          <button className="md:hidden" onClick={closeSidebar}>
+          <button onClick={closeSidebar}>
             <X size={20} />
           </button>
         </div>
@@ -132,10 +151,10 @@ const AdminLayout = () => {
         </div>
       </aside>
 
-      {/* overlay */}
+      {/* Overlay — all screen sizes when sidebar is open */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/30 md:hidden z-30"
+          className="fixed inset-0 bg-black/30 z-30 cursor-pointer"
           onClick={closeSidebar}
         />
       )}
@@ -143,8 +162,11 @@ const AdminLayout = () => {
       {/* ================= Main Content Area ================= */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Topbar */}
-        <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0">
-          <button className="md:hidden" onClick={() => setSidebarOpen(true)}>
+        <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-800 bg-white dark:bg-black shrink-0">
+          <button
+            className="cursor-pointer"
+            onClick={() => setSidebarOpen(true)}
+          >
             <Menu size={20} />
           </button>
 
@@ -156,26 +178,58 @@ const AdminLayout = () => {
               {darkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
 
-            <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-slate-800 rounded-xl">
-              <User size={18} />
-              <span className="text-sm font-medium">
-                {loading ? "Loading..." : displayName}
-              </span>
+            {/* Profile button with dropdown */}
+            <div className="relative" ref={profileRef}>
+              <button
+                onClick={() => setProfileOpen((prev) => !prev)}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-slate-800 rounded-xl hover:bg-gray-200 dark:hover:bg-slate-700 transition"
+              >
+                <User size={18} />
+                <span className="text-sm font-medium">
+                  {loading ? "Loading..." : displayName}
+                </span>
+              </button>
+
+              {/* Dropdown */}
+              {profileOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg overflow-hidden z-50">
+                  <div className="px-4 py-3 border-b border-gray-100 dark:border-slate-800">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Signed in as
+                    </p>
+                    <p className="text-sm font-semibold truncate">
+                      {loading ? "Loading..." : displayName}
+                    </p>
+                  </div>
+
+                  <Link
+                    to="/dashboard/settings"
+                    onClick={() => setProfileOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition"
+                  >
+                    <Settings size={15} />
+                    Settings
+                  </Link>
+
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition w-full"
+                  >
+                    <LogOut size={15} />
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </header>
 
-        {/* Main Content - SCROLLABLE */}
+        {/* Main Content */}
         <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
           <div className="p-6">
             <Outlet />
           </div>
         </main>
-
-        {/* Footer */}
-        <footer className="p-3 text-center text-sm border-t border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0">
-          © 2026 WebXGuard
-        </footer>
       </div>
     </div>
   );

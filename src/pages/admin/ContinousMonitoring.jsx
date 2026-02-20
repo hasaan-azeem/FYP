@@ -15,7 +15,7 @@ const ContinousMonitoring = () => {
 
   return (
     <div className="mb-6 p-2">
-      <div className="w-full bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+      <div className="w-full bg-white dark:bg-[#0F172B] p-6 rounded-xl shadow">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Monitored Website

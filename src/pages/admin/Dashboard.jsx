@@ -1,6 +1,6 @@
 import { AuthContext } from "../../context/AuthContext";
 
-import LineChart from "../../components/admin/charts/LineChart";
+import BarChart from "../../components/admin/charts/BarChart";
 import Speedometer from "../../components/admin/charts/Speedometer";
 import StatsGrid from "../../components/admin/StatsGrid";
 
@@ -15,44 +15,64 @@ const recentScans = [
 const statusColor = (status) => {
   switch (status) {
     case "Completed":
-      return "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300";
+      return "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
     case "Warning":
-      return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300";
+      return "bg-amber-500/10 text-amber-400 border border-amber-500/20";
     case "Critical":
-      return "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300";
+      return "bg-red-500/10 text-red-400 border border-red-500/20";
     default:
-      return "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300";
+      return "bg-slate-500/10 text-slate-400 border border-slate-500/20";
   }
+};
+
+const scoreColor = (score) => {
+  if (score >= 80) return "text-emerald-400";
+  if (score >= 60) return "text-amber-400";
+  return "text-red-400";
+};
+
+const scoreBarColor = (score) => {
+  if (score >= 80) return "bg-emerald-500";
+  if (score >= 60) return "bg-amber-500";
+  return "bg-red-500";
 };
 
 const Dashboard = () => {
   return (
-    <div className="w-fulltext-black dark:text-white">
+    <div className="w-full text-slate-100">
       {/* Stat boxes */}
       <StatsGrid />
 
       {/* Charts */}
-      <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-5">
+
         {/* Left column */}
-        <div className="col-span-1 lg:col-span-2 flex flex-col gap-4">
-          {/* Line chart */}
-          <div className="bg-white dark:bg-gray-800 rounded shadow dark:shadow-none p-5">
-            <h3 className="text-xl font-semibold mb-4">Scan Activity</h3>
+        <div className="col-span-1 lg:col-span-2 flex flex-col gap-5">
+
+          {/* Bar chart */}
+          <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-base font-semibold tracking-wide">Scan Activity</h3>
+              <span className="text-xs text-slate-500 bg-slate-800 px-3 py-1 rounded-full">This Week</span>
+            </div>
             <div className="w-full h-64 md:h-80">
-              <LineChart />
+              <BarChart />
             </div>
           </div>
 
           {/* Recent Scan History */}
-          <div className="bg-white dark:bg-gray-800 rounded shadow dark:shadow-none p-5 overflow-x-auto">
-            <h3 className="text-xl font-semibold mb-4">Recent Scan History</h3>
+          <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 overflow-x-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-base font-semibold tracking-wide">Recent Scan History</h3>
+              <span className="text-xs text-slate-500 bg-slate-800 px-3 py-1 rounded-full">{recentScans.length} entries</span>
+            </div>
 
-            <table className="min-w-full table-auto border-collapse">
+            <table className="min-w-full table-auto">
               <thead>
-                <tr className="bg-gray-100 dark:bg-gray-700">
-                  <th className="text-left px-4 py-2">Status</th>
-                  <th className="text-left px-4 py-2">Website</th>
-                  <th className="text-left px-4 py-2">Score</th>
+                <tr className="border-b border-slate-800">
+                  <th className="text-left pb-3 text-xs font-medium text-slate-500 uppercase tracking-widest px-2">Status</th>
+                  <th className="text-left pb-3 text-xs font-medium text-slate-500 uppercase tracking-widest px-2">Website</th>
+                  <th className="text-left pb-3 text-xs font-medium text-slate-500 uppercase tracking-widest px-2">Score</th>
                 </tr>
               </thead>
 
@@ -60,17 +80,26 @@ const Dashboard = () => {
                 {recentScans.map((scan, index) => (
                   <tr
                     key={index}
-                    className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                    className="border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors duration-150"
                   >
-                    <td
-                      className={`px-4 py-2 font-medium rounded ${statusColor(
-                        scan.status,
-                      )}`}
-                    >
-                      {scan.status}
+                    <td className="px-2 py-3">
+                      <span className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md ${statusColor(scan.status)}`}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                        {scan.status}
+                      </span>
                     </td>
-                    <td className="px-4 py-2">{scan.website}</td>
-                    <td className="px-4 py-2 font-bold">{scan.score}</td>
+                    <td className="px-2 py-3 text-sm text-slate-300 font-mono">{scan.website}</td>
+                    <td className="px-2 py-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${scoreBarColor(scan.score)}`}
+                            style={{ width: `${scan.score}%` }}
+                          />
+                        </div>
+                        <span className={`text-sm font-semibold font-mono ${scoreColor(scan.score)}`}>{scan.score}</span>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -79,53 +108,65 @@ const Dashboard = () => {
         </div>
 
         {/* Right column */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-5">
+
           {/* Speedometer */}
-          <div className="bg-white dark:bg-gray-800 rounded shadow dark:shadow-none p-5 flex flex-col items-center">
-            <h3 className="text-xl font-semibold mb-4">Threat Level</h3>
+          <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 flex flex-col items-center">
+            <div className="flex items-center justify-between w-full mb-4">
+              <h3 className="text-base font-semibold tracking-wide">Threat Level</h3>
+              <span className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-full">Moderate</span>
+            </div>
             <div className="h-44 scale-75 md:scale-90 lg:scale-75">
               <Speedometer />
             </div>
           </div>
 
           {/* Threat list */}
-          <div className="bg-white dark:bg-gray-800 rounded shadow dark:shadow-none p-5">
-            <h3 className="text-xl font-semibold mb-4">Threats</h3>
+          <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-base font-semibold tracking-wide">Threats</h3>
+              <span className="text-xs text-slate-500 bg-slate-800 px-3 py-1 rounded-full">5 active</span>
+            </div>
 
-            <ul className="space-y-2">
-              <li className="flex justify-between bg-red-100 dark:bg-red-900 rounded p-2">
-                <span>SQL Injection Detected</span>
-                <span className="text-red-700 dark:text-red-300 font-bold">
-                  High
-                </span>
+            <ul className="space-y-2.5">
+              <li className="flex items-center justify-between bg-red-500/5 border border-red-500/15 rounded-xl p-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-1 h-8 bg-red-500 rounded-full shrink-0" />
+                  <span className="text-sm text-slate-200">SQL Injection Detected</span>
+                </div>
+                <span className="text-xs font-semibold text-red-400 bg-red-500/10 px-2.5 py-1 rounded-md">HIGH</span>
               </li>
 
-              <li className="flex justify-between bg-yellow-100 dark:bg-yellow-900 rounded p-2">
-                <span>Outdated Software Version</span>
-                <span className="text-yellow-700 dark:text-yellow-300 font-bold">
-                  Medium
-                </span>
+              <li className="flex items-center justify-between bg-amber-500/5 border border-amber-500/15 rounded-xl p-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-1 h-8 bg-amber-500 rounded-full shrink-0" />
+                  <span className="text-sm text-slate-200">Outdated Software Version</span>
+                </div>
+                <span className="text-xs font-semibold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md">MED</span>
               </li>
 
-              <li className="flex justify-between bg-green-100 dark:bg-green-900 rounded p-2">
-                <span>Minor Security Warning</span>
-                <span className="text-green-700 dark:text-green-300 font-bold">
-                  Low
-                </span>
+              <li className="flex items-center justify-between bg-emerald-500/5 border border-emerald-500/15 rounded-xl p-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-1 h-8 bg-emerald-500 rounded-full shrink-0" />
+                  <span className="text-sm text-slate-200">Minor Security Warning</span>
+                </div>
+                <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md">LOW</span>
               </li>
 
-              <li className="flex justify-between bg-red-100 dark:bg-red-900 rounded p-2">
-                <span>Cross-Site Scripting (XSS)</span>
-                <span className="text-red-700 dark:text-red-300 font-bold">
-                  High
-                </span>
+              <li className="flex items-center justify-between bg-red-500/5 border border-red-500/15 rounded-xl p-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-1 h-8 bg-red-500 rounded-full shrink-0" />
+                  <span className="text-sm text-slate-200">Cross-Site Scripting (XSS)</span>
+                </div>
+                <span className="text-xs font-semibold text-red-400 bg-red-500/10 px-2.5 py-1 rounded-md">HIGH</span>
               </li>
 
-              <li className="flex justify-between bg-yellow-100 dark:bg-yellow-900 rounded p-2">
-                <span>Weak Password Detected</span>
-                <span className="text-yellow-700 dark:text-yellow-300 font-bold">
-                  Medium
-                </span>
+              <li className="flex items-center justify-between bg-amber-500/5 border border-amber-500/15 rounded-xl p-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-1 h-8 bg-amber-500 rounded-full shrink-0" />
+                  <span className="text-sm text-slate-200">Weak Password Detected</span>
+                </div>
+                <span className="text-xs font-semibold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md">MED</span>
               </li>
             </ul>
           </div>

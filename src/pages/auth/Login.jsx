@@ -1,231 +1,3 @@
-// import { useEffect, useState, useContext } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import AuthLayout from "../../components/auth/AuthLayout";
-// import AuthInput from "../../components/auth/AuthInput";
-// import AuthButton from "../../components/auth/AuthButton";
-// import { validateEmail, validatePassword } from "../../utils/validators";
-// import API from "../../api/backend_api"; // Axios instance for backend
-// import { AuthContext } from "../../context/AuthContext";
-
-// export default function Login() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [errors, setErrors] = useState({});
-//   const [loading, setLoading] = useState(false);
-//   const { user } = useContext(AuthContext);
-//   const { login } = useContext(AuthContext); // store JWT
-//   const navigate = useNavigate();
-
-//   // ✅ Auto redirect if already logged in
-//   useEffect(() => {
-//     if (user?.token) {
-//       navigate("/dashboard"); // agar logged in hai, dashboard pe bhej do
-//     }
-//   }, [user, navigate]);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     // Frontend validation
-//     const emailError = validateEmail(email);
-//     const passwordError = validatePassword(password);
-
-//     if (emailError || passwordError) {
-//       setErrors({
-//         email: emailError,
-//         password: passwordError,
-//       });
-//       return;
-//     }
-
-//     setErrors({});
-//     setLoading(true);
-
-//     try {
-//       // Call backend login route
-//       const res = await API.post("/auth/dashboard/login", { email, password });
-
-//       // Save JWT in AuthContext
-//       await login(res.data.access_token);
-
-//       setLoading(false);
-
-//       // Redirect to dashboard
-//       navigate("/dashboard");
-//     } catch (err) {
-//       setLoading(false);
-//       const msg =
-//         err.response?.data?.msg ||
-//         "Login failed. Check credentials and try again.";
-//       setErrors({ backend: msg });
-//     }
-//   };
-
-//   return (
-//     <AuthLayout
-//       title="Welcome Back"
-//       subtitle="Sign in to access your WebXGuard dashboard"
-//       footer={
-//         <>
-//           Don’t have an account?{" "}
-//           <Link
-//             to="/auth/dashboard/signup"
-//             className="text-emerald-400 hover:underline"
-//           >
-//             Create one
-//           </Link>
-//         </>
-//       }
-//     >
-//       <form onSubmit={handleSubmit} className="space-y-5">
-//         {/* Backend error */}
-//         {errors.backend && (
-//           <p className="text-sm text-red-400">{errors.backend}</p>
-//         )}
-
-//         <AuthInput
-//           label="Email address"
-//           type="email"
-//           placeholder="you@company.com"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           error={errors.email}
-//         />
-
-//         <AuthInput
-//           label="Password"
-//           type="password"
-//           placeholder="••••••••"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           error={errors.password}
-//         />
-
-//         <AuthButton
-//           text="Sign In"
-//           loading={loading}
-//           disabled={!email || !password}
-//         />
-//       </form>
-//     </AuthLayout>
-//   );
-// }
-
-// import { useEffect, useState, useContext } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import AuthLayout from "../../components/auth/AuthLayout";
-// import AuthInput from "../../components/auth/AuthInput";
-// import AuthButton from "../../components/auth/AuthButton";
-// import { validateEmail, validatePassword } from "../../utils/validators";
-// import API from "../../api/backend_api";
-// import { AuthContext } from "../../context/AuthContext";
-
-// export default function Login() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [errors, setErrors] = useState({});
-//   const [loading, setLoading] = useState(false);
-
-//   const { user, login } = useContext(AuthContext);
-//   const navigate = useNavigate();
-
-//   // Auto redirect if already logged in
-//   useEffect(() => {
-//     if (user?.token) {
-//       navigate("/dashboard");
-//     }
-//   }, [user, navigate]);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     // Frontend validation
-//     const emailError = validateEmail(email);
-//     const passwordError = validatePassword(password);
-
-//     if (emailError || passwordError) {
-//       setErrors({
-//         email: emailError,
-//         password: passwordError,
-//       });
-//       return;
-//     }
-
-//     setErrors({});
-//     setLoading(true);
-
-//     try {
-//       // Call backend login route
-//       const res = await API.post("/auth/dashboard/login", {
-//         email,
-//         password,
-//       });
-
-//       // Save JWT in AuthContext
-//       await login(res.data.access_token);
-
-//       // Redirect to dashboard
-//       navigate("/dashboard");
-//     } catch (err) {
-//       const msg =
-//         err.response?.data?.message ||
-//         "Login failed. Check credentials and try again.";
-//       setErrors({ backend: msg });
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <AuthLayout
-//       title="Welcome Back"
-//       subtitle="Sign in to access your WebXGuard dashboard"
-//       footer={
-//         <>
-//           Don't have an account?{" "}
-//           <Link
-//             to="/auth/dashboard/signup"
-//             className="text-emerald-400 hover:underline"
-//           >
-//             Create one
-//           </Link>
-//         </>
-//       }
-//     >
-//       <form onSubmit={handleSubmit} className="space-y-5">
-//         {/* Backend error */}
-//         {errors.backend && (
-//           <p className="text-sm text-red-400">{errors.backend}</p>
-//         )}
-
-//         <AuthInput
-//           label="Email address"
-//           type="email"
-//           placeholder="you@company.com"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           error={errors.email}
-//         />
-
-//         <AuthInput
-//           label="Password"
-//           type="password"
-//           placeholder="••••••••"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           error={errors.password}
-//         />
-
-//         <AuthButton
-//           text="Sign In"
-//           loading={loading}
-//           disabled={!email || !password || loading}
-//         />
-//       </form>
-//     </AuthLayout>
-//   );
-// }
-
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../../components/auth/AuthLayout";
@@ -234,35 +6,30 @@ import AuthButton from "../../components/auth/AuthButton";
 import { validateEmail, validatePassword } from "../../utils/validators";
 import API from "../../api/backend_api";
 import { AuthContext } from "../../context/AuthContext";
+import AuthLoader from "../../components/AuthLoader";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState(null); // "google" | "github" | null
 
   const { user, login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // Auto redirect if already logged in
   useEffect(() => {
-    if (user) {
-      navigate("/dashboard");
-    }
+    if (user) navigate("/dashboard");
   }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Frontend validation
     const emailError = validateEmail(email);
     const passwordError = validatePassword(password);
 
     if (emailError || passwordError) {
-      setErrors({
-        email: emailError,
-        password: passwordError,
-      });
+      setErrors({ email: emailError, password: passwordError });
       return;
     }
 
@@ -270,20 +37,12 @@ export default function Login() {
     setLoading(true);
 
     try {
-      // Call backend login route
-      const res = await API.post("/api/auth/login", {
-        email,
-        password,
-      });
-
-      // Login with token and user data from response
+      const res = await API.post("/api/auth/login", { email, password });
       await login(res.data.access_token, res.data.user);
-
-      // Navigate to dashboard
       navigate("/dashboard");
-    } catch (err) {
+    } catch (error) {
       const msg =
-        err.response?.data?.error?.message ||
+        error.response?.data?.error?.message ||
         "Login failed. Check credentials and try again.";
       setErrors({ backend: msg });
     } finally {
@@ -292,21 +51,34 @@ export default function Login() {
   };
 
   const handleOAuthLogin = async (provider) => {
+    setOauthLoading(provider);
+    setErrors({});
     try {
       const response = await API.get(`/api/auth/oauth/${provider}`);
       if (response.data.auth_url) {
-        // Save state for verification
         localStorage.setItem("oauth_state", response.data.state);
-        // Redirect to OAuth provider
         window.location.href = response.data.auth_url;
+        // keep loader showing while redirect happens
+        return;
       }
-      // eslint-disable-next-line no-unused-vars
-    } catch (err) {
-      setErrors({
-        backend: `${provider} login failed. Please try again.`,
-      });
+    } catch (error) {
+      const msg =
+        error.response?.data?.error?.message ||
+        `${provider} login failed. Please try again.`;
+      setErrors({ backend: msg });
+      setOauthLoading(null);
     }
   };
+
+  if (loading) return <AuthLoader message="Signing you in..." />;
+  if (oauthLoading)
+    return (
+      <AuthLoader
+        message={`Connecting with ${
+          oauthLoading.charAt(0).toUpperCase() + oauthLoading.slice(1)
+        }...`}
+      />
+    );
 
   return (
     <AuthLayout
@@ -325,7 +97,6 @@ export default function Login() {
       }
     >
       <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Backend error */}
         {errors.backend && (
           <p className="text-sm text-red-400">{errors.backend}</p>
         )}
@@ -349,8 +120,11 @@ export default function Login() {
         />
 
         <div className="flex items-center justify-between">
-          <label className="flex items-center text-sm text-gray-400">
-            <input type="checkbox" className="accent-emerald-500 mr-2" />
+          <label className="flex items-center text-sm text-gray-400 cursor-pointer">
+            <input
+              type="checkbox"
+              className="accent-emerald-500 mr-2 cursor-pointer"
+            />
             Remember me
           </label>
           <Link
@@ -368,11 +142,11 @@ export default function Login() {
         />
       </form>
 
-      {/* OAuth Options */}
+      {/* OAuth */}
       <div className="mt-6">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-700"></div>
+            <div className="w-full border-t border-gray-700" />
           </div>
           <div className="relative flex justify-center text-sm">
             <span className="px-2 bg-gray-900 text-gray-400">
@@ -385,7 +159,8 @@ export default function Login() {
           <button
             type="button"
             onClick={() => handleOAuthLogin("google")}
-            className="flex items-center justify-center px-4 py-3 border border-gray-700 rounded-lg hover:bg-gray-800 transition"
+            disabled={!!oauthLoading}
+            className="flex items-center justify-center px-4 py-3 border border-gray-700 rounded-lg hover:bg-gray-800 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -413,7 +188,8 @@ export default function Login() {
           <button
             type="button"
             onClick={() => handleOAuthLogin("github")}
-            className="flex items-center justify-center px-4 py-3 border border-gray-700 rounded-lg hover:bg-gray-800 transition"
+            disabled={!!oauthLoading}
+            className="flex items-center justify-center px-4 py-3 border border-gray-700 rounded-lg hover:bg-gray-800 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg
               className="w-5 h-5 text-gray-300"

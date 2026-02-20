@@ -25,10 +25,7 @@ export default function ResetPassword() {
   const strength = getPasswordStrength(formData.password);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
     setMessage({ type: "", text: "" });
   };
 
@@ -37,6 +34,15 @@ export default function ResetPassword() {
     setLoading(true);
     setMessage({ type: "", text: "" });
 
+    if (!token) {
+      setMessage({
+        type: "error",
+        text: "Invalid reset link. Please request a new one.",
+      });
+      setLoading(false);
+      return;
+    }
+
     const passwordError = validatePassword(formData.password);
     const confirmError = validateConfirmPassword(
       formData.password,
@@ -44,21 +50,13 @@ export default function ResetPassword() {
     );
 
     if (passwordError || confirmError) {
-      setMessage({
-        type: "error",
-        text: passwordError || confirmError,
-      });
-      setLoading(false);
-      return;
-    }
-
-    if (!token) {
-      setMessage({ type: "error", text: "Invalid reset link" });
+      setMessage({ type: "error", text: passwordError || confirmError });
       setLoading(false);
       return;
     }
 
     try {
+      // Correct endpoint: /api/users/reset-password (handled by user_bp)
       await API.post("/api/users/reset-password", {
         token,
         password: formData.password,
@@ -67,12 +65,35 @@ export default function ResetPassword() {
         type: "success",
         text: "Password reset successful! Redirecting to login...",
       });
-      setTimeout(() => navigate("/auth/dashboard/login"), 2000);
+      setTimeout(
+        () => navigate("/auth/dashboard/login", { replace: true }),
+        2000,
+      );
     } catch (error) {
-      setMessage({
-        type: "error",
-        text: error.response?.data?.error?.message || "Password reset failed",
-      });
+      const code = error.response?.data?.error?.code;
+      if (code === "TOKEN_EXPIRED") {
+        setMessage({
+          type: "error",
+          text: "This reset link has expired. Please request a new one.",
+        });
+      } else if (code === "TOKEN_USED") {
+        setMessage({
+          type: "error",
+          text: "This reset link has already been used. Please request a new one.",
+        });
+      } else if (code === "INVALID_TOKEN") {
+        setMessage({
+          type: "error",
+          text: "This reset link is invalid. Please request a new one.",
+        });
+      } else {
+        setMessage({
+          type: "error",
+          text:
+            error.response?.data?.error?.message ||
+            "Password reset failed. Please try again.",
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -144,7 +165,7 @@ export default function ResetPassword() {
           onChange={handleChange}
         />
 
-        {/* Password strength */}
+        {/* Password strength meter using percent from getPasswordStrength */}
         {formData.password && (
           <div className="text-xs text-gray-400">
             Strength:
@@ -153,15 +174,8 @@ export default function ResetPassword() {
             </span>
             <div className="h-1 w-full bg-gray-700 rounded mt-1">
               <div
-                className={`h-1 rounded ${strength.color}`}
-                style={{
-                  width:
-                    strength.label === "Weak"
-                      ? "33%"
-                      : strength.label === "Medium"
-                        ? "66%"
-                        : "100%",
-                }}
+                className={`h-1 rounded transition-all ${strength.color}`}
+                style={{ width: `${strength.percent}%` }}
               />
             </div>
           </div>

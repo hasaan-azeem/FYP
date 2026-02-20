@@ -1,25 +1,7 @@
-// import { useContext } from "react";
-// import { Navigate } from "react-router-dom";
-// import { AuthContext } from "../context/AuthContext";
-
-// export default function ProtectedRoute({ children }) {
-//   const { user, authLoading } = useContext(AuthContext);
-
-//   if (authLoading) {
-//     return null; // ya loader
-//   }
-
-//   if (!user) {
-//     return <Navigate to="/auth/dashboard/login" replace />;
-//   }
-
-//   return children;
-// }
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-// Loading spinner component
 const LoadingSpinner = () => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
     <div className="text-center">
@@ -29,20 +11,24 @@ const LoadingSpinner = () => (
   </div>
 );
 
-// Protected Route Component
 export default function ProtectedRoute({ children }) {
   const { user, loading } = useContext(AuthContext);
 
-  // Show loading spinner while checking auth
+  // Wait until auth state is resolved
   if (loading) {
     return <LoadingSpinner />;
   }
 
-  // If not logged in, redirect to login
+  // Not logged in at all, go to login
   if (!user) {
     return <Navigate to="/auth/dashboard/login" replace />;
   }
 
-  // User is authenticated, render the protected content
+  // Logged in but email not verified, go to notice page
+  if (!user.is_verified) {
+    return <Navigate to="/auth/dashboard/verify-email-notice" replace />;
+  }
+
+  // Logged in and verified, allow access
   return children;
 }

@@ -22,7 +22,7 @@ const Reports = () => {
   return (
     <div className="w-full space-y-6">
       {/* Generate New Report */}
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg space-y-4 shadow-md dark:shadow-gray-700">
+      <div className="bg-white dark:bg-[#0F172B] p-6 rounded-lg space-y-4 shadow-md dark:shadow-gray-700">
         <h3 className="text-gray-900 dark:text-white font-semibold text-lg">
           Generate New Report
         </h3>
@@ -92,7 +92,7 @@ const Reports = () => {
       </div>
 
       {/* Generated Reports */}
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md dark:shadow-gray-700 space-y-2">
+      <div className="bg-white dark:bg-[#0F172B] p-6 rounded-lg shadow-md dark:shadow-gray-700 space-y-2">
         <h3 className="text-gray-900 dark:text-white font-semibold text-lg">
           Generated Reports
         </h3>

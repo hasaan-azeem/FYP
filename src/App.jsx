@@ -174,10 +174,14 @@ import ContinousMonitoring from "./pages/admin/ContinousMonitoring";
 // Auth Pages
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
+import VerifyEmail from "./pages/auth/VerifyEmail";
+import VerifyEmailNotice from "./pages/auth/VerifyEmailNotice";
 import ForgotPassword from "./pages/auth/Forgotpassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import OAuthCallback from "./pages/auth/OAuthCallback";
+
 import ScrollToTop from "./components/ScrollToTop";
+import RouteLoader from "./components/Routeloader";
 
 function AppContent() {
   const location = useLocation();
@@ -193,6 +197,7 @@ function AppContent() {
   const content = (
     <>
       <ScrollToTop />
+      <RouteLoader />
       <Routes>
         {/* Client Routes */}
         <Route element={<ClientLayout />}>
@@ -205,6 +210,12 @@ function AppContent() {
           {/* Auth Routes (No header/sidebar) */}
           <Route path="/auth/dashboard/login" element={<Login />} />
           <Route path="/auth/dashboard/signup" element={<Signup />} />
+          <Route
+            path="/auth/dashboard/verify-email-notice"
+            element={<VerifyEmailNotice />}
+          />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+
           <Route
             path="/auth/dashboard/forgot-password"
             element={<ForgotPassword />}

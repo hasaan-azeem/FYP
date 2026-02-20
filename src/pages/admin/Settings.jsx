@@ -196,7 +196,7 @@ const Setting = () => {
   return (
     <div className="max-w-5xl mx-auto dark:text-gray-200 shadow-md ">
       {/* Profile Information */}
-      <div className="bg-white dark:bg-gray-800 dark:text-gray-200 shadow-md rounded-lg p-6">
+      <div className="bg-white dark:bg-[#0F172B] dark:text-gray-200 shadow-md rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-6">Personal Information</h2>
 
         {message.text && (
@@ -277,7 +277,7 @@ const Setting = () => {
       </div>
 
       {/* Change Password */}
-      <div className="bg-white mt-5 dark:bg-gray-800 dark:text-gray-200 shadow-md rounded-lg p-6">
+      <div className="bg-white mt-5 dark:bg-[#0F172B] dark:text-gray-200 shadow-md rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-6">Change Password</h2>
 
         {passwordMessage.text && (
