@@ -175,7 +175,7 @@ import ContinousMonitoring from "./pages/admin/ContinousMonitoring";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import VerifyEmail from "./pages/auth/VerifyEmail";
-import VerifyEmailNotice from "./pages/auth/VerifyEmailNotice";
+import VerifyEmailNotice from "./pages/auth/Verifyemailnotice";
 import ForgotPassword from "./pages/auth/Forgotpassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import OAuthCallback from "./pages/auth/OAuthCallback";
